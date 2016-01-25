@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DotNetContainer.ServiceHost {
+namespace DNC.Host {
     internal class Program {
         private static void Main(string[] args) {
             Console.WriteLine("Hello world!!");
