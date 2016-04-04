@@ -1,0 +1,9 @@
+{
+  "version": "0.0.1",
+  "dependencies": {
+    "Autofac.Extras.Moq": "4.0.0"
+  },
+  "frameworks": {
+      "dnx451": {}
+  }
+}
