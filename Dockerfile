@@ -1,5 +1,7 @@
 FROM microsoft/aspnet
 
-RUN pwd
+COPY . /working
+WORKDIR /working
 
-RUN dnu restore
+RUN ["dnu", "restore"]
+#RUN ["dnu", "build"]
