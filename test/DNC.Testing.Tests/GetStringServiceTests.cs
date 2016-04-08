@@ -3,10 +3,10 @@ using DNC.Testing.Tests.Resources;
 
 namespace DNC.Testing.Tests
 {
-    public class UnitTestsForTests : UnitTestsFor<GetStringService>
+    public class GetStringServiceTests : UnitTestFor<GetStringService>
     {
         [Fact]
-        public void TestGetString_WhenDependencyMocked_DependencyInjected()
+        public void GetString_WhenDependencyMocked_DependencyInjected()
         {
             const string SUCCESSFULLY_INJECTED = "Successfully injected.";
             Mock<IMockableInterface>()
@@ -15,9 +15,9 @@ namespace DNC.Testing.Tests
             var result = Component.GetString();
             Assert.Equal(SUCCESSFULLY_INJECTED, result);
         }
-        
+
         [Fact]
-        public void TestGetString_WhenDependencyNotMocked_LooseInjectionBehaviourObserved()
+        public void GetString_WhenDependencyNotMocked_LooseInjectionBehaviourObserved()
         {
             var result = Component.GetString();
             Assert.Equal(null, result);
