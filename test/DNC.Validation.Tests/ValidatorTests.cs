@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using DNC.Validation.Tests.Resources;
 using Xunit;
 
 namespace DNC.Validation.Tests
@@ -33,6 +35,44 @@ namespace DNC.Validation.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => Require.That(0).Validate<ArgumentOutOfRangeException>(x => x != 0, "x != 0"));
+        }
+
+        [Fact]
+        public void IsValidModel_IsValid_Passes()
+        {
+            var model = new TestModel
+            {
+                Content = "Test",
+                TestRegexContent = "TestRegex"
+            };
+
+            Require.That(model).IsValidModel();
+        }
+
+        [Fact]
+        public void IsValidModel_FailRegex_Throws()
+        {
+            var model = new TestModel
+            {
+                Content = "Test",
+                TestRegexContent = "FailRegex"
+            };
+
+            Assert.Throws<ValidationException>(() => Require.That(model).IsValidModel());
+        }
+
+        [Fact]
+        public void IsValidProperty_IsValid_Passes()
+        {
+            var model = new TestModel { Content = "Test" };
+            Require.That(model).IsValidProperty(x => x.Content);
+        }
+
+        [Fact]
+        public void IsValidProperty_FailRegex_Throws()
+        {
+            var model = new TestModel { TestRegexContent = "FailRegex" };
+            Assert.Throws<ValidationException>(() => Require.That(model).IsValidProperty(x => x.TestRegexContent));
         }
     }
 }

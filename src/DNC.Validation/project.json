@@ -1,6 +1,11 @@
 {
-  "version": "0.0.1",
-  "frameworks": {
-      "dnx451": {}
-  }
+    "version": "0.0.2",
+    "dependencies": {},
+    "frameworks": {
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.ComponentModel.DataAnnotations": "4.0.0.0"
+            }
+        }
+    }
 }
