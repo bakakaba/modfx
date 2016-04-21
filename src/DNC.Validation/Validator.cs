@@ -13,18 +13,22 @@ namespace DNC.Validation
             _item = item;
         }
 
-        public void Validate<TException>(Func<T, bool> evaluator, string message) where TException : Exception
+        public Validator<T> Validate<TException>(Func<T, bool> evaluator, string message) where TException : Exception
         {
             if (!evaluator(_item))
                 throw (Exception)Activator.CreateInstance(typeof(TException), message);
+
+            return this;
         }
 
-        public void Validate(Func<T, bool> evaluator, string message)
+        public Validator<T> Validate(Func<T, bool> evaluator, string message)
         {
             Validate<ArgumentException>(evaluator, message);
+
+            return this;
         }
 
-        public void IsValidModel()
+        public Validator<T> IsValidModel()
         {
             if (_item == null)
                 throw new ArgumentNullException("Model must not be null.");
@@ -33,9 +37,11 @@ namespace DNC.Validation
 
             var ctx = new ValidationContext(_item);
             System.ComponentModel.DataAnnotations.Validator.ValidateObject(_item, ctx, true);
+
+            return this;
         }
 
-        public void IsValidProperty<TValue>(Expression<Func<T, TValue>> selector)
+        public Validator<T> IsValidProperty<TValue>(Expression<Func<T, TValue>> selector)
         {
             var ctx = new ValidationContext(_item);
 
@@ -44,6 +50,8 @@ namespace DNC.Validation
             var val = selector.Compile()(_item);
 
             System.ComponentModel.DataAnnotations.Validator.ValidateProperty(val, ctx);
+
+            return this;
         }
     }
 }
