@@ -41,7 +41,7 @@ namespace DNC.Validation
             return this;
         }
 
-        public Validator<T> IsValidProperty<TValue>(Expression<Func<T, TValue>> selector)
+        public Validator<T> HasValidProperty<TValue>(Expression<Func<T, TValue>> selector)
         {
             var ctx = new ValidationContext(_item);
 

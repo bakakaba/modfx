@@ -66,14 +66,14 @@ namespace DNC.Validation.Tests
         public void IsValidProperty_IsValid_Passes()
         {
             var model = new TestModel { Content = "Test" };
-            Require.That(model).IsValidProperty(x => x.Content);
+            Require.That(model).HasValidProperty(x => x.Content);
         }
 
         [Fact]
         public void IsValidProperty_FailRegex_Throws()
         {
             var model = new TestModel { TestRegexContent = "FailRegex" };
-            Assert.Throws<ValidationException>(() => Require.That(model).IsValidProperty(x => x.TestRegexContent));
+            Assert.Throws<ValidationException>(() => Require.That(model).HasValidProperty(x => x.TestRegexContent));
         }
     }
 }
