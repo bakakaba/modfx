@@ -1,7 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using DNC.Validation.Tests.Resources;
 using Xunit;
+using DNC.Validation.Tests.Resources;
+using DNC.Validation.Validators;
 
 namespace DNC.Validation.Tests
 {

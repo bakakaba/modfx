@@ -31,14 +31,26 @@ namespace DNC.Validation.Validators
         public static Validator<string> IsNotNullOrEmpty<TException>(this Validator<string> validator, string message = null) where TException : Exception
         {
             validator
-                .IsNotNull<TException>()
-                .IsNotEmpty<TException>();
+                .Validate<TException>(x => !string.IsNullOrEmpty(x), message);
             return validator;
         }
 
         public static Validator<string> IsNotNullOrEmpty(this Validator<string> validator, string message = null)
         {
             validator.IsNotNullOrEmpty<ArgumentException>(message);
+            return validator;
+        }
+
+        public static Validator<string> IsNotNullOrWhitespace<TException>(this Validator<string> validator, string message = null) where TException : Exception
+        {
+            validator
+                .Validate<TException>(x => !string.IsNullOrWhiteSpace(x), message);
+            return validator;
+        }
+
+        public static Validator<string> IsNotNullOrWhitespace(this Validator<string> validator, string message = null)
+        {
+            validator.IsNotNullOrWhitespace<ArgumentException>(message);
             return validator;
         }
     }

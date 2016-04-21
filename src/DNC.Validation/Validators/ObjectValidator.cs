@@ -4,27 +4,27 @@ namespace DNC.Validation.Validators
 {
     public static class ObjectValidator
     {
-        public static Validator<string> IsNotNull<TException>(this Validator<string> validator, string message = null) where TException : Exception
+        public static Validator<T> IsNotNull<T, TException>(this Validator<T> validator, string message = null) where TException : Exception
         {
             validator.Validate<TException>(x => x != null, message);
             return validator;
         }
 
-        public static Validator<string> IsNotNull(this Validator<string> validator, string message = null)
+        public static Validator<T> IsNotNull<T>(this Validator<T> validator, string message = null)
         {
-            validator.IsNotNull<ArgumentException>(message);
+            validator.IsNotNull<T, ArgumentException>(message);
             return validator;
         }
 
-        public static Validator<string> IsNull<TException>(this Validator<string> validator, string message) where TException : Exception
+        public static Validator<T> IsNull<T, TException>(this Validator<T> validator, string message = null) where TException : Exception
         {
             validator.Validate<TException>(x => x == null, message);
             return validator;
         }
 
-        public static Validator<string> IsNull(this Validator<string> validator, string message)
+        public static Validator<T> IsNull<T>(this Validator<T> validator, string message = null)
         {
-            validator.IsNull<ArgumentException>(message);
+            validator.IsNull<T, ArgumentException>(message);
             return validator;
         }
     }
