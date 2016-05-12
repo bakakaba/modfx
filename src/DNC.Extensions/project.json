@@ -1,5 +1,5 @@
 {
-    "version": "0.0.7",
+    "version": "0.0.1",
     "authors": [
         "Lian Hoy Lee"
     ],
@@ -7,10 +7,6 @@
     "licenseUrl": "https://github.com/cruz82/DotNetContainer/blob/master/LICENSE",
     "dependencies": {},
     "frameworks": {
-        "dnx451": {
-            "frameworkAssemblies": {
-                "System.ComponentModel.DataAnnotations": "4.0.0.0"
-            }
-        }
+        "dnx451": {}
     }
 }

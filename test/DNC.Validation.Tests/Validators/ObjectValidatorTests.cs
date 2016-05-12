@@ -22,5 +22,15 @@ namespace DNC.Validation.Tests.Validators
             Assert.Throws<ArgumentNullException>(
                 () => Require.That(model).IsNotNull<TestModel, ArgumentNullException>());
         }
+
+        [Theory]
+        [InlineData("string")]
+        [InlineData(0)]
+        [InlineData(true)]
+        public void IsDefault_NotDefaultString_ThrowsArgumentException(object item)
+        {
+            Assert.Throws<ArgumentException>(
+                () => Require.That(item).IsDefault());
+        }
     }
 }
