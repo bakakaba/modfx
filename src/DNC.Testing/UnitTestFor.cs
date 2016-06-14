@@ -1,7 +1,9 @@
 using System;
 using Autofac;
 using Autofac.Extras.Moq;
+using Microsoft.Extensions.Logging;
 using Moq;
+using Serilog;
 
 namespace DNC.Testing
 {
@@ -11,6 +13,7 @@ namespace DNC.Testing
         protected UnitTestFor()
         {
             _mocker = AutoMock.GetLoose();
+            ConfigureLogger();
         }
 
         protected Mock<TMock> Mock<TMock>() where TMock : class
@@ -37,6 +40,23 @@ namespace DNC.Testing
         public void Dispose()
         {
             _mocker.Dispose();
+        }
+
+        private void ConfigureLogger()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .Enrich.FromLogContext()
+                .WriteTo.LiterateConsole(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message}{NewLine}{Exception}")
+                .CreateLogger();
+
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddSerilog();
+
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance<ILoggerFactory>(loggerFactory);
+            builder.RegisterSource(new LoggerSource());
+            builder.Update(_mocker.Container);
         }
     }
 }
