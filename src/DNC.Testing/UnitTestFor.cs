@@ -1,6 +1,7 @@
 using System;
 using Autofac;
 using Autofac.Extras.Moq;
+using DNC.Framework;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Serilog;
