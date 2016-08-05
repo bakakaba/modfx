@@ -6,10 +6,10 @@ namespace DNC.Extensions.Tests
     public class IEnumerableExtensionsTests
     {
         [Fact]
-        public void Yield_GivenItem_ReturnsEnumerableWrappedItem()
+        public void ConvertToEnumerable_GivenItem_ReturnsEnumerableWrappedItem()
         {
             var item = "Item";
-            var result = item.Yield();
+            var result = item.ConvertToEnumerable();
             Assert.IsAssignableFrom<IEnumerable<string>>(result);
         }
     }

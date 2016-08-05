@@ -4,7 +4,7 @@ namespace DNC.Extensions
 {
     public static class IEnumerableExtensions
     {
-        public static IEnumerable<T> Yield<T>(this T item)
+        public static IEnumerable<T> ConvertToEnumerable<T>(this T item)
         {
             yield return item;
         }
