@@ -1,16 +1,28 @@
 {
-    "version": "0.0.1",
+    "version": "0.0.3",
     "authors": [
         "Lian Hoy Lee"
     ],
-    "projectUrl": "https://github.com/cruz82/DotNetContainer",
-    "licenseUrl": "https://github.com/cruz82/DotNetContainer/blob/master/LICENSE",
+    "packOptions": {
+        "licenseUrl": "https://github.com/cruz82/DotNetContainer/blob/master/LICENSE",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/cruz82/DotNetContainer"
+        }
+    },
     "dependencies": {
-        "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
-        "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
-        "DNC.Validation": "0.0.7"
+        "Microsoft.Extensions.Logging": "1.0.0",
+        "Autofac.Extensions.DependencyInjection": "4.0.0",
+        "DNC.Validation": {
+            "target": "project"
+        }
     },
     "frameworks": {
-        "dnx451": {}
+        "dnx451": {},
+        "netstandard1.6": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1"
+            }
+        }
     }
 }

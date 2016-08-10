@@ -23,12 +23,14 @@ namespace DNC.Framework
             Require.That(registrationAccessor).IsNotNull();
 
             var swt = service as IServiceWithType;
-            if (swt == null
-                || !swt.ServiceType.IsGenericType
-                || swt.ServiceType.GetGenericTypeDefinition() != typeof(ILogger<>))
+            if (swt == null)
                 return Enumerable.Empty<IComponentRegistration>();
 
-            var loggerType = swt.ServiceType.GetGenericArguments()[0];
+            var swtInfo = swt.ServiceType.GetTypeInfo();
+            if (!swtInfo.IsGenericType || swtInfo.GetGenericTypeDefinition() != typeof(ILogger<>))
+                return Enumerable.Empty<IComponentRegistration>();
+
+            var loggerType = swtInfo.GetGenericArguments()[0];
             var loggerSvc = swt.ChangeType(loggerType);
 
             var registrationCreator = CreateLoggerRegistrationMethod.MakeGenericMethod(loggerType);
@@ -38,7 +40,7 @@ namespace DNC.Framework
                 .Cast<IComponentRegistration>();
         }
 
-        static readonly MethodInfo CreateLoggerRegistrationMethod = typeof(LoggerSource)
+        static readonly MethodInfo CreateLoggerRegistrationMethod = typeof(LoggerSource).GetTypeInfo()
             .GetMethod("CreateLoggerRegistration", BindingFlags.Static | BindingFlags.NonPublic);
 
         static IComponentRegistration CreateLoggerRegistration<T>(Service service)

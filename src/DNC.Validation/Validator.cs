@@ -32,7 +32,7 @@ namespace DNC.Validation
         {
             if (_item == null)
                 throw new ArgumentNullException("Model must not be null.");
-            if (!_item.GetType().IsClass)
+            if (!_item.GetType().IsByRef)
                 throw new ArgumentException("Object is not a model.");
 
             var ctx = new ValidationContext(_item);
