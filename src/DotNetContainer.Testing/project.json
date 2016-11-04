@@ -1,0 +1,31 @@
+{
+    "version": "0.1.0",
+    "authors": [
+        "Lian Hoy Lee"
+    ],
+    "packOptions": {
+        "licenseUrl": "https://github.com/cruz82/DotNetContainer/blob/master/LICENSE",
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/cruz82/DotNetContainer"
+        }
+    },
+    "dependencies": {
+        "Castle.Core": "4.0.0-beta001",
+        "Autofac.Extras.Moq": "4.1.0-rc3-231",
+        "Serilog.Extensions.Logging": "1.2.0",
+        "Serilog.Sinks.Literate": "2.0.0",
+        "DotNetContainer.Framework": {
+            "target": "project"
+        }
+    },
+    "frameworks": {
+        "netstandard1.6": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1",
+                "System.ComponentModel.Annotations": "4.1.0",
+                "System.Collections": "4.0.11"
+            }
+        }
+    }
+}
