@@ -8,7 +8,7 @@ namespace DotNetContainer.Extensions.Tests
         [Fact]
         public void ConvertToEnumerable_GivenItem_ReturnsEnumerableWrappedItem()
         {
-            var item = "Item";
+            const string item = "Item";
             var result = item.ConvertToEnumerable();
             Assert.IsAssignableFrom<IEnumerable<string>>(result);
         }

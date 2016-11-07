@@ -5,6 +5,8 @@ using System.Reflection;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
+using DotNetContainer.Validation;
+using DotNetContainer.Validation.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace DotNetContainer.Framework
@@ -34,7 +36,7 @@ namespace DotNetContainer.Framework
             var registrationCreator = CreateLoggerRegistrationMethod.MakeGenericMethod(loggerType);
 
             return registrationAccessor(loggerSvc)
-                .Select(v => registrationCreator.Invoke(null, new object[] { service }))
+                .Select(v => registrationCreator.Invoke(null, new object[] {service}))
                 .Cast<IComponentRegistration>();
         }
 
@@ -44,15 +46,14 @@ namespace DotNetContainer.Framework
         static IComponentRegistration CreateLoggerRegistration<T>(Service service)
         {
             var rb = RegistrationBuilder.ForDelegate(
-                (c, p) =>
-                {
-                    var loggerFactory = c.Resolve<ILoggerFactory>();
-                    return new Logger<T>(loggerFactory);
-                })
+                    (c, p) =>
+                    {
+                        var loggerFactory = c.Resolve<ILoggerFactory>();
+                        return new Logger<T>(loggerFactory);
+                    })
                 .As(service);
 
-            return RegistrationBuilder.CreateRegistration(rb);
+            return rb.CreateRegistration();
         }
-
     }
 }
