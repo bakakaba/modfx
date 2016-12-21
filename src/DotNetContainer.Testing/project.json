@@ -20,11 +20,9 @@
         }
     },
     "frameworks": {
-        "netstandard1.6": {
+        "netstandard1.4": {
             "dependencies": {
-                "Microsoft.CSharp": "4.0.1",
-                "System.ComponentModel.Annotations": "4.1.0",
-                "System.Collections": "4.0.11"
+                "Microsoft.CSharp": "4.0.1"
             }
         }
     }

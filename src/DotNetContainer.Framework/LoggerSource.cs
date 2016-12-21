@@ -22,21 +22,23 @@ namespace DotNetContainer.Framework
             Require.That(service).IsNotNull();
             Require.That(registrationAccessor).IsNotNull();
 
+            //Check if is service with type
             var swt = service as IServiceWithType;
             if (swt == null)
                 return Enumerable.Empty<IComponentRegistration>();
 
-            var swtInfo = swt.ServiceType.GetTypeInfo();
-            if (!swtInfo.IsGenericType || swtInfo.GetGenericTypeDefinition() != typeof(ILogger<>))
+            var serviceType = swt.ServiceType;
+            var serviceTypeInfo = serviceType.GetTypeInfo();
+            if (!serviceTypeInfo.IsGenericType || serviceTypeInfo.GetGenericTypeDefinition() != typeof(ILogger<>))
                 return Enumerable.Empty<IComponentRegistration>();
 
-            var loggerType = swtInfo.GetGenericArguments()[0];
+            var loggerType = serviceTypeInfo.GetGenericArguments()[0];
             var loggerSvc = swt.ChangeType(loggerType);
 
             var registrationCreator = CreateLoggerRegistrationMethod.MakeGenericMethod(loggerType);
 
             return registrationAccessor(loggerSvc)
-                .Select(v => registrationCreator.Invoke(null, new object[] {service}))
+                .Select(v => registrationCreator.Invoke(null, new object[] { service }))
                 .Cast<IComponentRegistration>();
         }
 
@@ -45,12 +47,12 @@ namespace DotNetContainer.Framework
 
         static IComponentRegistration CreateLoggerRegistration<T>(Service service)
         {
-            var rb = RegistrationBuilder.ForDelegate(
-                    (c, p) =>
-                    {
-                        var loggerFactory = c.Resolve<ILoggerFactory>();
-                        return new Logger<T>(loggerFactory);
-                    })
+            var rb = RegistrationBuilder
+                .ForDelegate((c, p) =>
+                {
+                    var loggerFactory = c.Resolve<ILoggerFactory>();
+                    return new Logger<T>(loggerFactory);
+                })
                 .As(service);
 
             return rb.CreateRegistration();

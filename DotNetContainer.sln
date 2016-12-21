@@ -22,14 +22,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1A8ACBF6-23B5-4306-9C8C-3737A2C895C4} = {4C9313E2-D975-42AE-BDC2-958E601008C4}
-		{00000000-0000-0000-0000-000000000000} = {FE122683-B40B-466D-8095-5FF680FFC3DC}
 	EndGlobalSection
 EndGlobal
-	Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FE122683-B40B-466D-8095-5FF680FFC3DC}"
-	EndProject
-	Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4C9313E2-D975-42AE-BDC2-958E601008C4}"
-	EndProject
 	Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DotNetContainer.Extensions", "src\DotNetContainer.Extensions\DotNetContainer.Extensions.xproj", "{00000000-0000-0000-0000-000000000000}"
 	EndProject
 	Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DotNetContainer.Framework", "src\DotNetContainer.Framework\DotNetContainer.Framework.xproj", "{00000000-0000-0000-0000-000000000000}"

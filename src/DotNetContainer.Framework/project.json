@@ -18,10 +18,6 @@
         }
     },
     "frameworks": {
-        "netstandard1.6": {
-            "dependencies": {
-                "Microsoft.CSharp": "4.0.1"
-            }
-        }
+        "netstandard1.4": {}
     }
 }
