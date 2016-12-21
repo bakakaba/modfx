@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace DNC.Validation
 {
@@ -32,7 +33,7 @@ namespace DNC.Validation
         {
             if (_item == null)
                 throw new ArgumentNullException("Model must not be null.");
-            if (!_item.GetType().IsByRef)
+            if (!_item.GetType().GetTypeInfo().IsClass)
                 throw new ArgumentException("Object is not a model.");
 
             var ctx = new ValidationContext(_item);
