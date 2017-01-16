@@ -37,7 +37,7 @@ namespace DotNetContainer.Validation
                 throw new ArgumentException("Object is not a model.");
 
             var ctx = new ValidationContext(_item);
-            System.ComponentModel.DataAnnotations.Validator.ValidateObject(_item, ctx, true);
+            Validator.ValidateObject(_item, ctx, true);
 
             return this;
         }
@@ -50,7 +50,7 @@ namespace DotNetContainer.Validation
             ctx.MemberName = expression.Member.Name;
             var val = selector.Compile()(_item);
 
-            System.ComponentModel.DataAnnotations.Validator.ValidateProperty(val, ctx);
+            Validator.ValidateProperty(val, ctx);
 
             return this;
         }
