@@ -1,0 +1,8 @@
+language: none
+build:
+    pre_ci_boot:
+        image_name: microsoft/dotnet
+        image_tag: sdk
+        pull: true
+    ci:
+        - ./build.sh

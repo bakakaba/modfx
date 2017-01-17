@@ -32,7 +32,7 @@ namespace DotNetContainer.Framework
             if (!serviceTypeInfo.IsGenericType || serviceTypeInfo.GetGenericTypeDefinition() != typeof(ILogger<>))
                 return Enumerable.Empty<IComponentRegistration>();
 
-            var loggerType = serviceTypeInfo.GetGenericArguments()[0];
+            var loggerType = serviceTypeInfo.GenericTypeArguments[0];
             var loggerSvc = swt.ChangeType(loggerType);
 
             var registrationCreator = CreateLoggerRegistrationMethod.MakeGenericMethod(loggerType);
@@ -43,7 +43,7 @@ namespace DotNetContainer.Framework
         }
 
         static readonly MethodInfo CreateLoggerRegistrationMethod = typeof(LoggerSource).GetTypeInfo()
-            .GetMethod("CreateLoggerRegistration", BindingFlags.Static | BindingFlags.NonPublic);
+            .GetDeclaredMethod("CreateLoggerRegistration");
 
         static IComponentRegistration CreateLoggerRegistration<T>(Service service)
         {
