@@ -1,5 +1,7 @@
 # DotNetContainer
 
+[![Run Status](https://api.shippable.com/projects/570320c12a8192902e1b9477/badge?branch=master)](https://app.shippable.com/projects/570320c12a8192902e1b9477)
+
 A base environment on which to build applications and services.
 
 The DotNetContainer pulls together several libraries and ties them together to provide a consistent environment to target and build.
