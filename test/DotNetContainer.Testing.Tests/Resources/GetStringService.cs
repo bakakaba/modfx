@@ -14,7 +14,6 @@ namespace DotNetContainer.Testing.Tests.Resources
         }
 
         public string GetString() {
-            _logger.LogInformation("Get string called.");
             return _testInterface.GetString();
         }
     }

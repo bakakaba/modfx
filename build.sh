@@ -15,7 +15,9 @@ function build {
 
 function test {
 	echo $'\n#### Testing\n'
-	get_test_projects | xargs -I {} dotnet test {}
+	for project in $(get_test_projects); do
+		dotnet test $project -xml shippable/testresults/$(basename $project).xml
+	done
 }
 
 function get_src_projects {
