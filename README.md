@@ -1,6 +1,6 @@
 # DotNetContainer
 
-[![Run Status](https://img.shields.io/shippable/570320c12a8192902e1b9477/master.svg?label=status)](https://app.shippable.com/projects/570320c12a8192902e1b9477)
+[![Run Status](https://img.shields.io/shippable/570320c12a8192902e1b9477/master.svg)](https://app.shippable.com/projects/570320c12a8192902e1b9477)
 
 A base environment on which to build applications and services.
 
