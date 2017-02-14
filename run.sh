@@ -47,8 +47,8 @@ function package {
 function publish {
     echo Publishing...
 
-    for project in $(get_packages); do
-        dotnet nuget push -s nuget.org -k $NUGET_KEY
+    for package in $(get_packages); do
+        dotnet nuget push -s nuget.org -k $NUGET_KEY $package
     done
 }
 
