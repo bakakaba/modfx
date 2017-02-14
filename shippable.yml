@@ -5,4 +5,4 @@ build:
         image_tag: sdk
         pull: true
     ci:
-        - ./build.sh
+        - ./run.sh publish
