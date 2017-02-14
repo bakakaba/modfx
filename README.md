@@ -2,6 +2,13 @@
 
 [![Run Status](https://img.shields.io/shippable/570320c12a8192902e1b9477/master.svg)](https://app.shippable.com/projects/570320c12a8192902e1b9477)
 
+| Package     | Statistics |
+| ----------- | ---------- |
+| Extensions  | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
+| Framework   | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
+| Testing     | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
+| Validation  | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
+
 A base environment on which to build applications and services.
 
 The DotNetContainer pulls together several libraries and ties them together to provide a consistent environment to target and build.
