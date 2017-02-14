@@ -1,4 +1,8 @@
 language: none
+
+env:
+    - secure: GL6OuVsra+lZ4fX/jp8y0P2wz5VUE38ahcxwY9Ee9g3D9uqPTu1jMxg7jiESP68I3dtTnRqhcPgWDztF/bDobTVv24nUnFknhVCydd0aWZr2fUnS0aZNH7sBZ/JnY7GSTuV+DhZyArr83BnTC01+aTDIbKC1cMdSvRgivUo5swWUzCorUXzB9PKup1fl06SqFwtVdgTJIRuTMZlL2IxBcQ+7XE1BJCIRzhqt3V3czJjpDzF5/wee19IyL/VgE3HtoE9bJxOEwblt+bee7dzDmzojb+a7WYMAct0aiCsTGjD7+8d8ddxyjAOhW7BRvIQsmDOo0tix1Du5oOGFe0eaOg==
+
 build:
     pre_ci_boot:
         image_name: microsoft/dotnet

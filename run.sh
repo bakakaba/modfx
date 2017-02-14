@@ -37,7 +37,7 @@ function package {
     fi
 
     for project in $(get_projects); do
-        dotnet pack $project --configuration Release --version-suffix "$version_suffix"
+        dotnet pack $project -c Release --version-suffix "$version_suffix" --include-symbols
     done
 
     echo "Produced the following packages:"
@@ -47,7 +47,7 @@ function package {
 function publish {
     echo Publishing...
 
-    find src -name "*.nupkg" | xargs dotnet nuget push
+    find src -name "*.nupkg" ! -name "*.symbols.nupkg" | xargs dotnet nuget push -s nuget.org -k $NUGET_KEY
 }
 
 function get_projects {
