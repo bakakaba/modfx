@@ -47,7 +47,9 @@ function package {
 function publish {
     echo Publishing...
 
-    find src -name "*.nupkg" ! -name "*.symbols.nupkg" | xargs dotnet nuget push -s nuget.org -k $NUGET_KEY
+    for project in $(get_packages); do
+        dotnet nuget push -s nuget.org -k $NUGET_KEY
+    done
 }
 
 function get_projects {
@@ -56,6 +58,10 @@ function get_projects {
 
 function get_test_projects {
     find test -name '*.csproj'
+}
+
+function get_packages {
+    find src -name "*.nupkg" ! -name "*.symbols.nupkg"
 }
 
 case "$1" in
