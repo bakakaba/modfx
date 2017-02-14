@@ -4,10 +4,10 @@
 
 | Package     | Statistics |
 | ----------- | ---------- |
-| Extensions  | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
-| Framework   | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
+| Extensions  | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Extensions)](https://www.nuget.org/packages/DotnetContainer.Extensions/) |
+| Framework   | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Framework)](https://www.nuget.org/packages/DotnetContainer.Framework/) |
 | Testing     | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
-| Validation  | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Testing)](https://www.nuget.org/packages/DotnetContainer.Testing/) |
+| Validation  | [![NuGet Badge](https://buildstats.info/nuget/DotnetContainer.Validation)](https://www.nuget.org/packages/DotnetContainer.Validation/) |
 
 A base environment on which to build applications and services.
 
