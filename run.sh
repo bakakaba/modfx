@@ -5,7 +5,7 @@ set -e
 function clean {
     echo Cleaning...
 
-    find src test -iname obj -or -iname bin | xargs -r rm -r
+    find src test -name obj -or -name bin | xargs -r rm -r
 }
 
 function restore {
@@ -39,18 +39,15 @@ function package {
     for project in $(get_projects); do
         dotnet pack $project --configuration Release --version-suffix "$version_suffix"
     done
+
+    echo "Produced the following packages:"
+    find src -name "*.nupkg" -printf "    -> %p\n"
 }
 
 function publish {
     echo Publishing...
 
-    if [ "$USER" == "shippable" ]
-    then
-        find src -iname "*.nupkg" | xargs dotnet nuget push
-    else
-        echo "Not run by CI. Skipping packages:"
-        find src -iname "*.nupkg" -printf "    -> %p\n"
-    fi
+    find src -name "*.nupkg" | xargs dotnet nuget push
 }
 
 function get_projects {
@@ -74,11 +71,13 @@ case "$1" in
     test)
         test
         ;;
-    publish)
+    package)
         clean
         restore
         test
         package
+        ;;
+    publish)
         publish
         ;;
     *)
@@ -93,10 +92,11 @@ Commands:
 
     build       Builds projects specified in the solution.
 
-    test        Tests all projects under test/
+    test        Tests all projects under test/.
 
-    publish     Performs a clean build and test before
-                publishing all packages under src/
+    package     Performs clean build, test and pack.
+
+    publish     Publishes all packages under src/
 
     help        Prints this message.
 
