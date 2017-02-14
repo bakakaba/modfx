@@ -6,5 +6,5 @@ build:
         pull: true
     ci:
         - ./run.sh package
-    on_sucess:
+    on_success:
         - ./run.sh publish
