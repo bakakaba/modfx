@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>0.1.0</VersionPrefix>
+    <Description>Container framework.</Description>
     <Authors>Lian Hoy Lee</Authors>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <PackageId>DotNetContainer.Framework</PackageId>
     <PackageLicenseUrl>https://github.com/cruz82/DotNetContainer/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cruz82/DotNetContainer</RepositoryUrl>
