@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <VersionPrefix>0.1.2</VersionPrefix>
-    <Description>Container framework.</Description>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <VersionPrefix>0.1.3</VersionPrefix>
+    <Description>Everything you need to get started with DotNetContainer.</Description>
     <Authors>Lian Hoy Lee</Authors>
-    <TargetFramework>netstandard1.4</TargetFramework>
     <PackageLicenseUrl>https://github.com/cruz82/DotNetContainer/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cruz82/DotNetContainer</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.3.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.0" />
   </ItemGroup>

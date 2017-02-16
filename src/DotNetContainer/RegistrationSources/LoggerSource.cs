@@ -9,7 +9,7 @@ using DotNetContainer.Validation;
 using DotNetContainer.Validation.Validators;
 using Microsoft.Extensions.Logging;
 
-namespace DotNetContainer.Framework
+namespace DotNetContainer.RegistrationSources
 {
     public class LoggerSource : IRegistrationSource
     {
@@ -20,7 +20,6 @@ namespace DotNetContainer.Framework
             Func<Service, IEnumerable<IComponentRegistration>> registrationAccessor)
         {
             Require.That(service).IsNotNull();
-            Require.That(registrationAccessor).IsNotNull();
 
             //Check if is service with type
             var swt = service as IServiceWithType;

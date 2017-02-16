@@ -1,7 +1,7 @@
 using System;
 using Autofac;
 using Autofac.Extras.Moq;
-using DotNetContainer.Framework;
+using DotNetContainer.RegistrationSources;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Serilog;
@@ -11,35 +11,30 @@ namespace DotNetContainer.Testing
     public abstract class UnitTestFor<T> : IDisposable
     {
         private AutoMock _mocker;
+
         protected UnitTestFor()
         {
             _mocker = AutoMock.GetLoose();
             ConfigureLogger();
         }
 
+        public void Dispose() => _mocker.Dispose();
+
+        protected T Component => _mocker.Create<T>();
+
         protected Mock<TMock> Mock<TMock>() where TMock : class
         {
             return _mocker.Mock<TMock>();
         }
 
+        protected void Register<TService, TImplementation>()
+        {
+            _mocker.Provide<TService, TImplementation>();
+        }
+
         protected void RegisterInstance<TInstance>(TInstance instance) where TInstance : class
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance<TInstance>(instance);
-            builder.Update(_mocker.Container);
-        }
-
-        protected T Component
-        {
-            get
-            {
-                return _mocker.Create<T>();
-            }
-        }
-
-        public void Dispose()
-        {
-            _mocker.Dispose();
+            _mocker.Provide<TInstance>(instance);
         }
 
         private void ConfigureLogger()
@@ -53,8 +48,9 @@ namespace DotNetContainer.Testing
             var loggerFactory = new LoggerFactory();
             loggerFactory.AddSerilog();
 
+            RegisterInstance<ILoggerFactory>(loggerFactory);
+
             var builder = new ContainerBuilder();
-            builder.RegisterInstance<ILoggerFactory>(loggerFactory);
             builder.RegisterSource(new LoggerSource());
             builder.Update(_mocker.Container);
         }
