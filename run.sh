@@ -47,11 +47,13 @@ function package {
 function publish {
     echo Publishing...
 
-    if [ "$BRANCH" != "master" ] || [ "$BRANCH" == "development" ]
+    if [ "$BRANCH" == "master" ] || [ "$BRANCH" == "development" ]
     then
         for package in $(get_packages); do
             dotnet nuget push $package -s nuget.org -k "$NUGET_KEY" || true
         done
+    else
+        echo "On branch $BRANCH, skipping publish."
     fi
 }
 
