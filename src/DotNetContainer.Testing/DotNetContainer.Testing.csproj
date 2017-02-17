@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../DotNetContainer/DotNetContainer.csproj" />
+    <ProjectReference Include="../DotNetContainer.Logging/DotNetContainer.Logging.csproj" />
   </ItemGroup>
 </Project>

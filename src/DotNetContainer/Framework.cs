@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using DotNetContainer.RegistrationSources;
 
 namespace DotNetContainer
 {
@@ -17,7 +16,6 @@ namespace DotNetContainer
             var assemblies = LoadAssemblies();
 
             var cb = new ContainerBuilder();
-            cb.RegisterSource(new LoggerSource());
             cb.RegisterAssemblyModules(assemblies);
             _container = cb.Build();
         }

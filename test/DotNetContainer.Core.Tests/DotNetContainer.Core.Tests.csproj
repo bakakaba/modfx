@@ -9,6 +9,6 @@
     <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/DotNetContainer.Extensions/DotNetContainer.Extensions.csproj" />
+    <ProjectReference Include="../../src/DotNetContainer.Core/DotNetContainer.Core.csproj" />
   </ItemGroup>
 </Project>

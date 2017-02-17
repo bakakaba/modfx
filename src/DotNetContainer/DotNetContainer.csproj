@@ -9,11 +9,6 @@
     <RepositoryUrl>https://github.com/cruz82/DotNetContainer</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.0.0" />
-    <PackageReference Include="Autofac" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="../DotNetContainer.Validation/DotNetContainer.Validation.csproj" />
+    <ProjectReference Include="../DotNetContainer.Core/DotNetContainer.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using DotNetContainer.Core.Extensions;
 using Xunit;
 
-namespace DotNetContainer.Extensions.Tests
+namespace DotNetContainer.Core.Tests.Extensions
 {
     public class IEnumerableExtensionsTests
     {

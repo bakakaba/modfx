@@ -8,4 +8,11 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cruz82/DotNetContainer</RepositoryUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.4.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="1.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../DotNetContainer.Core/DotNetContainer.Core.csproj" />
+  </ItemGroup>
 </Project>

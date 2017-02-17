@@ -1,14 +1,10 @@
 using Autofac;
+using DotNetContainer.Core;
 
 namespace DotNetContainer.Samples.ConsoleApplication
 {
-    public class Module : Autofac.Module
+    public class Module : BaseModule
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterAssemblyTypes(ThisAssembly)
-                .AsImplementedInterfaces()
-                .AsSelf();
-        }
+        protected override void Register(ContainerBuilder builder) { }
     }
 }

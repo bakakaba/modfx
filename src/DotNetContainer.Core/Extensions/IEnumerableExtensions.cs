@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DotNetContainer.Extensions
+namespace DotNetContainer.Core.Extensions
 {
     public static class IEnumerableExtensions
     {

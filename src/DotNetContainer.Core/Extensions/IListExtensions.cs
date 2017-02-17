@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DotNetContainer.Extensions
+namespace DotNetContainer.Core.Extensions
 {
     public static class IListExtensions
     {

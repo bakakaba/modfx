@@ -1,7 +1,7 @@
 using System;
 using Autofac;
 using Autofac.Extras.Moq;
-using DotNetContainer.RegistrationSources;
+using DotNetContainer.Logging.RegistrationSources;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Serilog;

@@ -5,11 +5,9 @@ using System.Reflection;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
-using DotNetContainer.Validation;
-using DotNetContainer.Validation.Validators;
 using Microsoft.Extensions.Logging;
 
-namespace DotNetContainer.RegistrationSources
+namespace DotNetContainer.Logging.RegistrationSources
 {
     public class LoggerSource : IRegistrationSource
     {
@@ -19,8 +17,6 @@ namespace DotNetContainer.RegistrationSources
             Service service,
             Func<Service, IEnumerable<IComponentRegistration>> registrationAccessor)
         {
-            Require.That(service).IsNotNull();
-
             //Check if is service with type
             var swt = service as IServiceWithType;
             if (swt == null)
