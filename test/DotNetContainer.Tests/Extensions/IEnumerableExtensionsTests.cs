@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DotNetContainer.Core.Extensions;
+using DotNetContainer.Extensions;
 using Xunit;
 
 namespace DotNetContainer.Core.Tests.Extensions

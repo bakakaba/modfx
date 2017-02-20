@@ -4,6 +4,9 @@
     <TargetFramework>netcoreapp1.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="*.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../../src/DotNetContainer/DotNetContainer.csproj" />
   </ItemGroup>
 </Project>

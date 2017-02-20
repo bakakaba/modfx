@@ -1,6 +1,6 @@
 using System;
 
-namespace DotNetContainer.Core.Extensions
+namespace DotNetContainer.Extensions
 {
     public static class EnumExtensions
     {

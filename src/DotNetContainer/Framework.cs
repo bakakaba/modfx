@@ -3,20 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using DotNetContainer.Configuration;
+using DotNetContainer.Extensions;
+using DotNetContainer.Logging;
+using DotNetContainer.Models;
+using Serilog;
 
 namespace DotNetContainer
 {
     public class Framework
     {
-        private static Framework _instance;
+        public static Framework Instance { get; private set; }
+        public IConfigurationFactory ConfigurationFactory { get; }
+
+        private readonly IReadOnlyCollection<AssemblyExtended> _assemblies;
         private readonly IContainer _container;
 
         protected Framework()
         {
-            var assemblies = LoadAssemblies();
-
             var cb = new ContainerBuilder();
-            cb.RegisterAssemblyModules(assemblies);
+
+            ConfigurationFactory = ConfigurationService.Configure(cb);
+            LoggingService.Configure(cb, ConfigurationFactory.Get<Logging.LoggingConfiguration>());
+            Log.Verbose("Configuration and logging loaded");
+
+            _assemblies = Assembly
+                .GetEntryAssembly()
+                .LoadAssemblies();
+            Log.Verbose("{Count} ({ModuleCount} modules) assemblies loaded \n{Assemblies}",
+                _assemblies.Count,
+                _assemblies.Where(x => x.IsModule).Count(),
+                string.Join(string.Empty, _assemblies.Select(x => x.ToString())));
+
+            var modules = _assemblies
+                .Where(x => x.IsModule)
+                .Select(x => x.Assembly)
+                .ToArray();
+            cb.RegisterAssemblyModules(modules);
+
+            Log.Verbose("Building container");
             _container = cb.Build();
         }
 
@@ -36,40 +61,13 @@ namespace DotNetContainer
         /// <returns>Framework object to directly access the framework functionality.</returns>
         public static Framework Initialize()
         {
-            if (_instance != null)
+            if (Instance != null)
                 throw new InvalidOperationException(
                     "The framework has already been initialized. This should only be run once per application.");
 
-            _instance = new Framework();
+            Instance = new Framework();
 
-            return _instance;
-        }
-
-        private static Assembly[] LoadAssemblies()
-        {
-            var assemblies = new List<Assembly>();
-            var stack = new Stack<Assembly>();
-
-            var entryAsm = Assembly.GetEntryAssembly();
-            assemblies.Add(entryAsm);
-            stack.Push(entryAsm);
-
-            do
-            {
-                foreach (var reference in stack.Pop().GetReferencedAssemblies())
-                {
-                    var name = reference.Name;
-                    if (assemblies.Any(x => x.FullName.StartsWith(name)))
-                        continue;
-
-                    var assembly = Assembly.Load(reference);
-                    assemblies.Add(assembly);
-                    stack.Push(assembly);
-                }
-            }
-            while (stack.Count > 0);
-
-            return assemblies.ToArray();
+            return Instance;
         }
     }
 }

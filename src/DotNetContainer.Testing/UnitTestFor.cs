@@ -1,7 +1,7 @@
 using System;
 using Autofac;
 using Autofac.Extras.Moq;
-using DotNetContainer.Logging.RegistrationSources;
+using DotNetContainer.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Serilog;
@@ -39,7 +39,7 @@ namespace DotNetContainer.Testing
 
         private void ConfigureLogger()
         {
-            Log.Logger = new LoggerConfiguration()
+            Log.Logger = new Serilog.LoggerConfiguration()
                 .MinimumLevel.Verbose()
                 .Enrich.FromLogContext()
                 .WriteTo.LiterateConsole(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message}{NewLine}{Exception}")
@@ -51,7 +51,7 @@ namespace DotNetContainer.Testing
             RegisterInstance<ILoggerFactory>(loggerFactory);
 
             var builder = new ContainerBuilder();
-            builder.RegisterSource(new LoggerSource());
+            builder.RegisterSource(new LoggerRegistrationSource());
             builder.Update(_mocker.Container);
         }
     }

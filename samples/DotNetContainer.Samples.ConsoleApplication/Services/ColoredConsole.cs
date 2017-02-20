@@ -1,9 +1,17 @@
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetContainer.Samples.ConsoleApplication.Services
 {
     public class ColoredConsole : IColoredConsole
     {
+        private readonly ILogger _logger;
+
+        public ColoredConsole(ILogger<ColoredConsole> logger)
+        {
+            _logger = logger;
+        }
+
         public void Write(string text)
         {
             Process(text);

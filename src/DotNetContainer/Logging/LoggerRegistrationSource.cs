@@ -7,9 +7,9 @@ using Autofac.Builder;
 using Autofac.Core;
 using Microsoft.Extensions.Logging;
 
-namespace DotNetContainer.Logging.RegistrationSources
+namespace DotNetContainer.Logging
 {
-    public class LoggerSource : IRegistrationSource
+    public class LoggerRegistrationSource : IRegistrationSource
     {
         public bool IsAdapterForIndividualComponents => false;
 
@@ -37,7 +37,7 @@ namespace DotNetContainer.Logging.RegistrationSources
                 .Cast<IComponentRegistration>();
         }
 
-        static readonly MethodInfo CreateLoggerRegistrationMethod = typeof(LoggerSource).GetTypeInfo()
+        static readonly MethodInfo CreateLoggerRegistrationMethod = typeof(LoggerRegistrationSource).GetTypeInfo()
             .GetDeclaredMethod("CreateLoggerRegistration");
 
         static IComponentRegistration CreateLoggerRegistration<T>(Service service)
