@@ -10,7 +10,8 @@ namespace ModFx.Configuration
             builder
                 .RegisterInstance(fac)
                 .AsSelf()
-                .AsImplementedInterfaces();
+                .AsImplementedInterfaces()
+                .SingleInstance();
 
             return fac;
         }

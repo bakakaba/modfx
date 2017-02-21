@@ -1,5 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Autofac;
 using Microsoft.Extensions.Logging;
+using ModFx.Configuration;
 using Serilog;
 using Serilog.Core;
 
@@ -7,26 +12,31 @@ namespace ModFx.Logging
 {
     public class LoggingService
     {
-        private const string outputTemplate =
-            "[{Timestamp:HH:mm:ss} {Level:u3} ({MachineName}>{ProcessId}>{ThreadId})]{SourceContext}{NewLine}{Message}{NewLine}{Exception}";
-
-        public static void Configure(ContainerBuilder builder, LoggingConfiguration configuration)
+        public static void Configure(
+            ContainerBuilder builder,
+            IConfigurationFactory configurationFactory,
+            IEnumerable<Assembly> assemblies)
         {
-            builder.RegisterInstance(configuration);
+            var cfg = configurationFactory.Get<LoggingConfiguration>();
+            builder.RegisterInstance(cfg);
 
             var levelSwitch = new LoggingLevelSwitch();
             builder.RegisterInstance(levelSwitch);
 
-            Log.Logger = new Serilog.LoggerConfiguration()
+            var loggerCfg = new Serilog.LoggerConfiguration()
                 .MinimumLevel.ControlledBy(levelSwitch)
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
                 .Enrich.WithProcessId()
                 .Enrich.WithThreadId()
-                .WriteTo.LiterateConsole(outputTemplate: outputTemplate)
+                .WriteTo.LiterateConsole(outputTemplate: cfg.Template);
+
+            ApplyExtensions(configurationFactory, loggerCfg, assemblies);
+
+            Log.Logger = loggerCfg
                 .CreateLogger();
 
-            levelSwitch.MinimumLevel = configuration.Level;
+            levelSwitch.MinimumLevel = cfg.Level;
 
             RegisterMicrosoftLoggingFramework(builder);
         }
@@ -36,13 +46,28 @@ namespace ModFx.Logging
             builder.RegisterSource(new LoggerRegistrationSource());
 
             var loggerFactory = new LoggerFactory();
-            var logger = loggerFactory.CreateLogger(nameof(ModFx));
             loggerFactory.AddSerilog();
 
             builder
                 .RegisterInstance(loggerFactory)
                 .AsSelf()
                 .AsImplementedInterfaces();
+        }
+
+        private static void ApplyExtensions(
+            IConfigurationFactory configurationFactory,
+            Serilog.LoggerConfiguration loggerConfiguration,
+            IEnumerable<Assembly> assemblies)
+        {
+            var exts = assemblies
+                .SelectMany(x => x.DefinedTypes)
+                .Where(x => x.IsSubclassOf(typeof(ILoggingExtension)));
+
+            foreach (var ext in exts)
+            {
+                 var extObj = (ILoggingExtension)Activator.CreateInstance(ext.AsType());
+                 extObj.Configure(loggerConfiguration, configurationFactory);
+            }
         }
     }
 }

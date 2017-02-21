@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using ModFx.Samples.ConsoleApplication.Services;
 
 namespace ModFx.Samples.ConsoleApplication
@@ -9,11 +8,8 @@ namespace ModFx.Samples.ConsoleApplication
 
         static void Main(string[] args)
         {
-            var sw = Stopwatch.StartNew();
             _fx = Framework.Initialize();
-
             var console = _fx.Resolve<IColoredConsole>();
-            console.WriteLine($"Completed in &#yellow#>{sw.Elapsed}");
 
             console.WriteLine("&#cyan#>Hello &#green#>world!!");
         }

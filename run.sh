@@ -5,7 +5,7 @@ set -e
 function clean {
     echo Cleaning...
 
-    find src test -name obj -or -name bin | xargs -r rm -r
+    find src test samples -name obj -or -name bin | xargs -r rm -r
 }
 
 function restore {

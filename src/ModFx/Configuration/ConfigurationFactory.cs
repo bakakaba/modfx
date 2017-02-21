@@ -1,6 +1,7 @@
 using System;
 using ModFx.Extensions;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace ModFx.Configuration
 {
@@ -27,23 +28,32 @@ namespace ModFx.Configuration
             return Get<T>(moduleName);
         }
 
-        public T Get<T>(string moduleName)
+        public T Get<T>(params Type[] inheritedModuleTypes)
         {
-            return GetSection(moduleName).Get<T>();
+            var type = typeof(T);
+            var moduleName = type.Namespace;
+
+            var inheritedModuleNames = inheritedModuleTypes
+                .Select(x => x.Namespace)
+                .ToArray();
+
+            return Get<T>(moduleName, inheritedModuleNames);
         }
 
-        private IConfigurationSection GetSection(string sectionName)
+        public T Get<T>(string moduleName, params string[] inheritedModuleNames)
         {
-            var globalSection = _configurationRoot.GetSection(GlobalSectionName);
-            var moduleSection = _configurationRoot.GetSection(sectionName);
+            var moduleSection = _configurationRoot.GetSection(moduleName);
 
-            foreach (var item in globalSection.AsEnumerable())
+            var globalSection = _configurationRoot.GetSection(GlobalSectionName);
+            moduleSection = moduleSection.Merge(globalSection);
+
+            foreach(var inheritedModuleName in inheritedModuleNames)
             {
-                if (moduleSection[item.Key].IsNullOrWhiteSpace())
-                    moduleSection[item.Key] = item.Value;
+                var inheritedSection = _configurationRoot.GetSection(inheritedModuleName);
+                moduleSection = moduleSection.Merge(inheritedSection);
             }
 
-            return moduleSection;
+            return moduleSection.Get<T>();
         }
     }
 }

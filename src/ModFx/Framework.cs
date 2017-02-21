@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Autofac;
@@ -21,18 +22,21 @@ namespace ModFx
 
         protected Framework()
         {
+            var sw = Stopwatch.StartNew();
             var cb = new ContainerBuilder();
 
             ConfigurationFactory = ConfigurationService.Configure(cb);
-            LoggingService.Configure(cb, ConfigurationFactory.Get<Logging.LoggingConfiguration>());
-            Log.Verbose("Configuration and logging loaded");
-
             _assemblies = Assembly
                 .GetEntryAssembly()
                 .LoadAssemblies();
-            Log.Verbose("{Count} ({ModuleCount} modules) assemblies loaded \n{Assemblies}",
+
+            LoggingService.Configure(
+                cb,
+                ConfigurationFactory,
+                _assemblies.Select(x => x.Assembly));
+
+            Log.Verbose("{Count} assemblies loaded \n{Assemblies}",
                 _assemblies.Count,
-                _assemblies.Where(x => x.IsModule).Count(),
                 string.Join(string.Empty, _assemblies.Select(x => x.ToString())));
 
             var modules = _assemblies
@@ -41,8 +45,10 @@ namespace ModFx
                 .ToArray();
             cb.RegisterAssemblyModules(modules);
 
-            Log.Verbose("Building container");
             _container = cb.Build();
+            Log.Information(
+                "Framework loaded {ModuleCount} modules from {AssemblyCount} assemblies in {Elapsed}",
+                modules.Length, _assemblies.Count, sw.Elapsed);
         }
 
         /// <summary>

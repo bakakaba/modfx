@@ -8,5 +8,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../../src/ModFx/ModFx.csproj" />
+    <ProjectReference Include="../../src/ModFx.Logging.File/ModFx.Logging.File.csproj" />
   </ItemGroup>
 </Project>
