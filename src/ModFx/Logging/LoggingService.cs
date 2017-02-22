@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Autofac;
 using Microsoft.Extensions.Logging;
 using ModFx.Configuration;
+using ModFx.Extensions;
 using Serilog;
 using Serilog.Core;
 
@@ -15,7 +14,7 @@ namespace ModFx.Logging
         public static void Configure(
             ContainerBuilder builder,
             IConfigurationFactory configurationFactory,
-            IEnumerable<Assembly> assemblies)
+            IEnumerable<Action<LoggerConfiguration, IConfigurationFactory>> loggingExtensions)
         {
             var cfg = configurationFactory.Get<LoggingConfiguration>();
             builder.RegisterInstance(cfg);
@@ -31,7 +30,7 @@ namespace ModFx.Logging
                 .Enrich.WithThreadId()
                 .WriteTo.LiterateConsole(outputTemplate: cfg.Template);
 
-            ApplyExtensions(configurationFactory, loggerCfg, assemblies);
+            loggingExtensions.ForEach(x => x(loggerCfg, configurationFactory));
 
             Log.Logger = loggerCfg
                 .CreateLogger();
@@ -52,22 +51,6 @@ namespace ModFx.Logging
                 .RegisterInstance(loggerFactory)
                 .AsSelf()
                 .AsImplementedInterfaces();
-        }
-
-        private static void ApplyExtensions(
-            IConfigurationFactory configurationFactory,
-            Serilog.LoggerConfiguration loggerConfiguration,
-            IEnumerable<Assembly> assemblies)
-        {
-            var exts = assemblies
-                .SelectMany(x => x.DefinedTypes)
-                .Where(x => x.IsSubclassOf(typeof(ILoggingExtension)));
-
-            foreach (var ext in exts)
-            {
-                 var extObj = (ILoggingExtension)Activator.CreateInstance(ext.AsType());
-                 extObj.Configure(loggerConfiguration, configurationFactory);
-            }
         }
     }
 }

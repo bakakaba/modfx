@@ -12,7 +12,7 @@ using Serilog;
 
 namespace ModFx
 {
-    public class Framework
+    public class Framework : IDisposable
     {
         public static Framework Instance { get; private set; }
         public IConfigurationFactory ConfigurationFactory { get; }
@@ -20,7 +20,7 @@ namespace ModFx
         private readonly IReadOnlyCollection<AssemblyExtended> _assemblies;
         private readonly IContainer _container;
 
-        protected Framework()
+        protected Framework(IEnumerable<Action<LoggerConfiguration, IConfigurationFactory>> loggingExtensions)
         {
             var sw = Stopwatch.StartNew();
             var cb = new ContainerBuilder();
@@ -33,7 +33,7 @@ namespace ModFx
             LoggingService.Configure(
                 cb,
                 ConfigurationFactory,
-                _assemblies.Select(x => x.Assembly));
+                loggingExtensions);
 
             Log.Verbose("{Count} assemblies loaded \n{Assemblies}",
                 _assemblies.Count,
@@ -65,15 +65,24 @@ namespace ModFx
         /// once per application.
         /// </summary>
         /// <returns>Framework object to directly access the framework functionality.</returns>
-        public static Framework Initialize()
+        public static Framework Initialize(params Action<LoggerConfiguration, IConfigurationFactory>[] loggingExtensions)
         {
             if (Instance != null)
                 throw new InvalidOperationException(
                     "The framework has already been initialized. This should only be run once per application.");
 
-            Instance = new Framework();
+            Instance = new Framework(loggingExtensions);
 
             return Instance;
+        }
+
+        public void Dispose()
+        {
+            _container.Dispose();
+            Instance = null;
+
+            Log.Information("Framework disposed");
+            Log.CloseAndFlush();
         }
     }
 }

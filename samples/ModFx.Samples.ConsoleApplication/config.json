@@ -1,5 +1,5 @@
 {
     "ModFx.Logging": {
-        "level": "Verbose"
+        "level": "Debug"
     }
 }

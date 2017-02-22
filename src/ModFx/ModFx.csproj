@@ -1,12 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../build/ModFx.Module.targets" />
   <PropertyGroup>
-    <TargetFramework>netstandard1.5</TargetFramework>
-    <VersionPrefix>0.1.3</VersionPrefix>
     <Description>Everything you need to get started with ModFx.</Description>
-    <Authors>Lian Hoy Lee</Authors>
-    <PackageLicenseUrl>https://github.com/cruz82/ModFx/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/cruz82/ModFx</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.3.0" />

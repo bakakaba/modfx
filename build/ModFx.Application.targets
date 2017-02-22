@@ -1,0 +1,10 @@
+<Project>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp1.1</TargetFramework>
+        <Authors>Lian Hoy Lee</Authors>
+        <PackageLicenseUrl>https://github.com/cruz82/modfx/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/cruz82/modfx</RepositoryUrl>
+    </PropertyGroup>
+</Project>

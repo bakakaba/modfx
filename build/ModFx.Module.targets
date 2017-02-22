@@ -1,0 +1,10 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>netstandard1.5</TargetFramework>
+        <VersionPrefix>0.1.5</VersionPrefix>
+        <Authors>Lian Hoy Lee</Authors>
+        <PackageLicenseUrl>https://github.com/cruz82/modfx/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/cruz82/modfx</RepositoryUrl>
+    </PropertyGroup>
+</Project>

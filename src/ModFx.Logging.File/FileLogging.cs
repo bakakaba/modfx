@@ -4,9 +4,9 @@ using Serilog.Formatting.Compact;
 
 namespace ModFx.Logging.File
 {
-    public class FileLogging : ILoggingExtension
+    public class FileLogging
     {
-        public void Configure(
+        public static void Configure(
             LoggerConfiguration loggerConfiguration,
             IConfigurationFactory configurationFactory)
         {
@@ -15,7 +15,7 @@ namespace ModFx.Logging.File
             loggerConfiguration.WriteTo.RollingFile(
                 new RenderedCompactJsonFormatter(),
                 cfg.PathFormat,
-                // buffered: cfg.Buffered,
+                buffered: cfg.Buffered,
                 fileSizeLimitBytes: cfg.MaxFileSize,
                 retainedFileCountLimit: cfg.MaxFileCount);
         }
