@@ -26,15 +26,9 @@ namespace ModFx
             var cb = new ContainerBuilder();
 
             ConfigurationFactory = ConfigurationService.Configure(cb);
-            _assemblies = Assembly
-                .GetEntryAssembly()
-                .LoadAssemblies();
+            LoggingService.Configure(cb, ConfigurationFactory, loggingExtensions);
 
-            LoggingService.Configure(
-                cb,
-                ConfigurationFactory,
-                loggingExtensions);
-
+            _assemblies = Assembly.GetEntryAssembly().LoadAssemblies();
             Log.Verbose("{Count} assemblies loaded \n{Assemblies}",
                 _assemblies.Count,
                 string.Join(string.Empty, _assemblies.Select(x => x.ToString())));
