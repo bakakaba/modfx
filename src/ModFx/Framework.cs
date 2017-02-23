@@ -6,8 +6,8 @@ using System.Reflection;
 using Autofac;
 using ModFx.Configuration;
 using ModFx.Extensions;
+using ModFx.Extensions.Models;
 using ModFx.Logging;
-using ModFx.Models;
 using Serilog;
 
 namespace ModFx
@@ -15,7 +15,7 @@ namespace ModFx
     public class Framework : IDisposable
     {
         public static Framework Instance { get; private set; }
-        public IConfigurationFactory ConfigurationFactory { get; }
+        public IConfigurationFactory Configuration { get; }
 
         private readonly IReadOnlyCollection<AssemblyExtended> _assemblies;
         private readonly IContainer _container;
@@ -25,8 +25,8 @@ namespace ModFx
             var sw = Stopwatch.StartNew();
             var cb = new ContainerBuilder();
 
-            ConfigurationFactory = ConfigurationService.Configure(cb);
-            LoggingService.Configure(cb, ConfigurationFactory, loggingExtensions);
+            Configuration = ConfigurationFactory.Configure(cb);
+            LoggingService.Configure(cb, Configuration, loggingExtensions);
 
             _assemblies = Assembly.GetEntryAssembly().LoadAssemblies();
             Log.Verbose("{Count} assemblies loaded \n{Assemblies}",
@@ -34,8 +34,8 @@ namespace ModFx
                 string.Join(string.Empty, _assemblies.Select(x => x.ToString())));
 
             var modules = _assemblies
-                .Where(x => x.IsModule)
                 .Select(x => x.Assembly)
+                .Where(x => x.DefinedTypes.Any(t => t.IsSubclassOf(typeof(BaseModule))))
                 .ToArray();
             cb.RegisterAssemblyModules(modules);
 

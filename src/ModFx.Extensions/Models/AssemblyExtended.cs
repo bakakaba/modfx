@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using ModFx.Extensions;
 
-namespace ModFx.Models
+namespace ModFx.Extensions.Models
 {
     public class AssemblyExtended
     {
@@ -11,17 +10,15 @@ namespace ModFx.Models
         {
             Assembly = assembly;
             DirectDependencies = directDependencies;
-            IsModule = assembly.IsModule();
         }
 
         public Assembly Assembly { get; }
         public IReadOnlyCollection<AssemblyName> DirectDependencies { get; }
-        public bool IsModule { get; }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"{Assembly.FullName} (IsModule: {IsModule})");
+            sb.AppendLine($"{Assembly.FullName}");
 
             foreach(var dep in DirectDependencies)
                 sb.AppendLine($"\t->{dep.FullName}");

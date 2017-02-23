@@ -2,6 +2,7 @@ using System;
 using ModFx.Extensions;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using Autofac;
 
 namespace ModFx.Configuration
 {
@@ -11,13 +12,25 @@ namespace ModFx.Configuration
         private const string GlobalSectionName = "global";
         private IConfigurationRoot _configurationRoot;
 
-        public ConfigurationFactory()
+        private ConfigurationFactory()
         {
             var environmentName = Environment.GetEnvironmentVariable("EnvironmentNameKey");
             _configurationRoot = new ConfigurationBuilder()
                 .AddJsonFile("config.json")
                 .AddJsonFile($"config.{environmentName}.json", optional: true)
                 .Build();
+        }
+
+        public static IConfigurationFactory Configure(ContainerBuilder builder)
+        {
+            var fac = new ConfigurationFactory();
+            builder
+                .RegisterInstance(fac)
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            return fac;
         }
 
         public T Get<T>()

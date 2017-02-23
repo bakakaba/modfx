@@ -24,7 +24,7 @@ namespace ModFx
 
     public abstract class BaseModule<T> : BaseModule where T : class, new()
     {
-        protected T Configuration { get; } = Framework.Instance.ConfigurationFactory.Get<T>();
+        protected T Configuration { get; } = Framework.Instance.Configuration.Get<T>();
 
         protected override void Load(ContainerBuilder builder)
         {

@@ -16,4 +16,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="1.1.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../ModFx.Extensions/ModFx.Extensions.csproj" />
+  </ItemGroup>
 </Project>

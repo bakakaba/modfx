@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ModFx.Models;
+using ModFx.Extensions.Models;
 
 namespace ModFx.Extensions
 {
@@ -31,14 +31,8 @@ namespace ModFx.Extensions
             while (stack.Count > 0);
 
             return assemblies
-                .OrderByDescending(x => x.IsModule)
-                .ThenBy(x => x.Assembly.FullName)
+                .OrderBy(x => x.Assembly.FullName)
                 .ToList();
-        }
-
-        public static bool IsModule(this Assembly assembly)
-        {
-            return assembly.DefinedTypes.Any(x => x.IsSubclassOf(typeof(BaseModule)));
         }
     }
 }
