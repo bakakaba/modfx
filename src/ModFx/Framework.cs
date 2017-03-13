@@ -20,13 +20,17 @@ namespace ModFx
         private readonly IReadOnlyCollection<AssemblyExtended> _assemblies;
         private readonly IContainer _container;
 
-        protected Framework(IEnumerable<Action<LoggerConfiguration, IConfigurationFactory>> loggingExtensions)
+        protected Framework(IEnumerable<Type> typesNotInReferenceTree)
         {
             var sw = Stopwatch.StartNew();
             var cb = new ContainerBuilder();
 
             Configuration = ConfigurationFactory.Configure(cb);
-            LoggingService.Configure(cb, Configuration, loggingExtensions);
+
+            // Logging types are out of reference tree and configured seperately from all other items.
+            // Other items don't require special treatment as by listing them, it is then considered in the reference tree.
+            var loggingTypes = typesNotInReferenceTree.Where(x => x.IsAssignableTo<ILoggingExtension>());
+            LoggingService.Configure(cb, Configuration, loggingTypes);
 
             _assemblies = Assembly.GetEntryAssembly().LoadAssemblies();
             Log.Verbose("{Count} assemblies loaded \n{Assemblies}",
@@ -59,13 +63,13 @@ namespace ModFx
         /// once per application.
         /// </summary>
         /// <returns>Framework object to directly access the framework functionality.</returns>
-        public static Framework Initialize(params Action<LoggerConfiguration, IConfigurationFactory>[] loggingExtensions)
+        public static Framework Initialize(params Type[] typesNotInReferenceTree)
         {
             if (Instance != null)
                 throw new InvalidOperationException(
                     "The framework has already been initialized. This should only be run once per application.");
 
-            Instance = new Framework(loggingExtensions);
+            Instance = new Framework(typesNotInReferenceTree);
 
             return Instance;
         }

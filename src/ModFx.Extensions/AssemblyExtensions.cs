@@ -19,7 +19,7 @@ namespace ModFx.Extensions
                 var assembly = stack.Pop();
                 var directDependencies = assembly.GetReferencedAssemblies();
                 assemblies.Add(new AssemblyExtended(assembly, directDependencies));
-                foreach (var reference in assembly.GetReferencedAssemblies())
+                foreach (var reference in directDependencies)
                 {
                     if (assemblies.Any(x => x.Assembly.FullName.StartsWith(reference.Name)))
                         continue;

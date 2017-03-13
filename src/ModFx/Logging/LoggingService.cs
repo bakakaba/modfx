@@ -14,7 +14,7 @@ namespace ModFx.Logging
         public static void Configure(
             ContainerBuilder builder,
             IConfigurationFactory configurationFactory,
-            IEnumerable<Action<LoggerConfiguration, IConfigurationFactory>> loggingExtensions)
+            IEnumerable<Type> loggingExtensions)
         {
             var cfg = configurationFactory.Get<LoggingConfiguration>();
             builder.RegisterInstance(cfg);
@@ -30,7 +30,11 @@ namespace ModFx.Logging
                 .Enrich.WithThreadId()
                 .WriteTo.LiterateConsole(outputTemplate: cfg.Template);
 
-            loggingExtensions.ForEach(x => x(loggerCfg, configurationFactory));
+            loggingExtensions.ForEach(x =>
+            {
+                var logExt = (ILoggingExtension)Activator.CreateInstance(x);
+                logExt.Configure(loggerCfg, configurationFactory);
+            });
 
             Log.Logger = loggerCfg
                 .CreateLogger();

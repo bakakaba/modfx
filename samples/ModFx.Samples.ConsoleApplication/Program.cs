@@ -7,7 +7,7 @@ namespace ModFx.Samples.ConsoleApplication
     {
         static void Main(string[] args)
         {
-            using (var fx = Framework.Initialize(FileLogging.Configure))
+            using (var fx = Framework.Initialize(typeof(FileLogging)))
             {
                 var console = fx.Resolve<IColoredConsole>();
                 console.WriteLine("&#cyan#>Hello &#green#>world!!");
